@@ -7,7 +7,7 @@
 # Run MSA and MSB on the same host
 
 1. Clone the repository.
-(2. cd into MicroserviceB and run ```mvn package```
+2. (cd into MicroserviceB and run ```mvn package```
 3. cd into MicroserviceA and run ```mvn package```)
 4. run ```./setup.sh``` and choose the amount of users. Wait until its done.
 5. cd into MicroserviceB and run ```./setup.sh```. Wait until its done.
@@ -19,7 +19,7 @@
 
 ## MSA HOST:
 1. Clone the repository.
-(2. cd into MicroserviceA and run ```mvn package```)
+2. (cd into MicroserviceA and run ```mvn package```)
 3. run ```./setup.sh``` and choose the amount of users. Wait until its done.
 4. copy the created file user.txt from created-msa-files into the same folder on the Host of MSB.
 5. Wait until you ran the run command on MSB HOST.
@@ -28,7 +28,7 @@
 
 ## MSB HOST:
 1. Clone the repository
-(2. cd into MicroserviceA and run ```mvn package```)
+2. (cd into MicroserviceA and run ```mvn package```)
 3. copy the created file user.txt from created-msa-files on Host of MSA into created-msa-files on this host.
 4. cd into MicroserviceB and run ```./setup.sh```. Wait until its done.
 5. run ```./run.sh <delay for response in ms> <amount of MSB instances>```. Example: ```./run.sh 60 2```.
