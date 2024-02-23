@@ -6,7 +6,7 @@
 # Run MSA and MSB on the same host
 
 1. Clone the repository.
-2. run ```./setup.sh``` and choose the amount of users. Wait until its done.
+2. cd into MicroserviceA and run ```./setup.sh``` and choose the amount of users. Wait until its done.
 3. cd into MicroserviceB and run ```./setup.sh```. Wait until its done.
 4. run ```./run.sh <delay for response in ms> <amount of MSB instances>```. Example: ```./run.sh 60 2```.
 5. You might need to restart a Instance of MSB if you are running on Windows.
@@ -28,3 +28,9 @@
 3. cd into MicroserviceB and run ```./setup.sh```. Wait until its done.
 4. run ```./run.sh <delay for response in ms> <amount of MSB instances>```. Example: ```./run.sh 60 2```.
 5. You might need to restart an Instance of MSB if you are running on Windows.
+
+# Cleanup
+To run the next test the Database 1 of MSA and MSB has to be wiped of old entries.
+For that cd into MicroserviceA/MicroserviceB and execute ```./clean-db1.sh```
+
+**Be aware the volume for DB1 can become quite large. This can lead to issues.** 
