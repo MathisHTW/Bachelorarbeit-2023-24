@@ -1,0 +1,47 @@
+services:
+
+  msb: # der char _ ist in einer Domain nicht zulässig
+    build: MicroserviceB
+
+    restart: on-failure:10 #always?
+
+    environment:
+      - MSB_HOST_IP_V4_ADDRESS=${HOST_IP_V4_ADDRESS}
+      - SERVER_PORT=${MSB_SERVER_PORT} #the port that the msb.jar is runing on
+      - MSB_HOST_PORT_RANGE_START=${MSB_HOST_PORT_RANGE_START} #der erste port unterdem eine msb instanz erreichbar ist
+      - MSB_HOST_PORT_RANGE_END=${MSB_HOST_PORT_RANGE_END} #der letzte port unter dem eine msb instanz erreichbar ist
+      - MSB_KEY_ESTABLISHMENT_PATH=${MSB_KEY_ESTABLISHMENT_PATH}
+      - MSB_EINZELANORDNUNG_PATH=${MSB_EINZELANORDNUNG_PATH}
+      - MSB_TEST_PATH=${MSB_TEST_PATH}
+      - MSB_CONTEXT_PATH=${MSB_CONTEXT_PATH}
+    
+    scale: ${MSB_INSTANCES_CNT}
+
+    ports:
+      - ${MSB_HOST_PORT_RANGE_START}-${MSB_HOST_PORT_RANGE_END}:${MSB_SERVER_PORT}
+
+    stdin_open: true
+    tty: true
+
+  msa:
+    build: MicroserviceA
+
+    depends_on:
+      - msb
+
+    restart: on-failure:10
+
+    stdin_open: true
+    tty: true
+
+    environment:
+      - MSA_HOST_IP_V4_ADDRESS=${HOST_IP_V4_ADDRESS}
+      - MSB_HOST_IP_V4_ADDRESS=${HOST_IP_V4_ADDRESS}
+      - MSB_HOST_PORT_RANGE_START=${MSB_HOST_PORT_RANGE_START}
+      - MSB_KEY_ESTABLISHMENT_PATH=${MSB_CONTEXT_PATH}${MSB_KEY_ESTABLISHMENT_PATH}
+      - MSB_EINZELANORDNUNG_PATH=${MSB_CONTEXT_PATH}${MSB_EINZELANORDNUNG_PATH}
+      - MSB_TEST_PATH=${MSB_CONTEXT_PATH}${MSB_TEST_PATH}
+      - SERVER_PORT=${MSA_SERVER_PORT}
+
+    ports:
+      - ${MSA_HOST_PORT}:${MSA_SERVER_PORT}
